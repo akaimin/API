@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>เวลา</title>
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      function fetchTime() {
+        const thaiMonths = [
+          "มกราคม",
+          "กุมภาพันธ์",
+          "มีนาคม",
+          "เมษายน",
+          "พฤษภาคม",
+          "มิถุนายน",
+          "กรกฎาคม",
+          "สิงหาคม",
+          "กันยายน",
+          "ตุลาคม",
+          "พฤศจิกายน",
+          "ธันวาคม",
+        ];
+
+        fetch(
+          `https://learningportal.ocsc.go.th/learningspaceapi/localdatetime`
+        )
+          .then((response) => {
+            console.log(response);
+            return response.json();
+          })
+          .then((data) => {
+            const dateTime = new Date(data.datetime);
+            const day = dateTime.getDate();
+            const month = thaiMonths[dateTime.getMonth()];
+            const year = dateTime.getFullYear() + 543; // แปลงเป็น พ.ศ.
+            const time = dateTime.toLocaleTimeString("th-TH");
+            document.getElementById(
+              "time"
+            ).innerHTML = `วันที่ ${day} ${month} ${year} เวลา ${time} น.`;
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            document.getElementById(
+              "time"
+            ).innerHTML = `<span class="error">ระบบเครือข่ายล้มเหลว</span>`;
+          });
+      }
+      fetchTime();
+      setInterval(fetchTime, 1000);
+    </script>
+  </head>
+  <body>
+    <div id="time">กำลังโหลด...</div>
+  </body>
+</html>

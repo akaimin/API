@@ -1,0 +1,13 @@
+.error {
+  color: red;
+  font-weight: bold;
+}
+#time {
+  font-size: 24px;
+  font-weight: bold;
+}
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 50px;
+}
